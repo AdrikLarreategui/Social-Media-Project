@@ -1,4 +1,4 @@
-const users = require('../models/users')
+const User = require('../models/users')
 //const comments = require('../')
 const jwt = require('jsonwebtoken')
 const { jwt_secret } = require('../config/keys')
@@ -7,7 +7,7 @@ const authentication = async (req, res, next) => {
     try {
         const token = req.headers.authoritation
         const payload = jwt.verify(token, jwt_secret)
-        const user = await users.findOne({ _id: payload._id, tokens: token })
+        const user = await User.findOne({ _id: payload._id, tokens: token })
         if(!user) {
             return res.status(401).send({ message: 'No estás autorizado'})
         }

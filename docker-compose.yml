@@ -19,5 +19,5 @@ services:
      - 27017:27017
    environment:
      MONGO_INITDB_ROOT_USERNAME: adrian15186 #Nombre de usuario de MongoDB
-     MONGO_INITDB_ROOT_PASSWORD:  #Password otorgado por MongoDb para el proyecto o colección
+     MONGO_INITDB_ROOT_PASSWORD: aaQSC2fcmrpsu2Qy #Password otorgado por MongoDb para el proyecto o colección
      MONGO_INITDB_DATABASE: Social-Media-Project # Nombre del proyecto

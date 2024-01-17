@@ -1,4 +1,4 @@
-const users = require('../models/users')
+const User = require('../models/users')
 
 const userController = {
     create(req, res) {
@@ -14,33 +14,35 @@ const userController = {
 
     async register (req, res) {
         try {
-            const user = await users.create({ ...req.body, role: "User"})
-            res.status(201).send({ message: "Usuario registrado con éxito", user})
+            await User.create(req.body)
+            res.status(201)
+            res.send({message: 'Usuario registrado con éxito'})
         } catch (error) {
             console.error(error)
+            res.status(500).send({message: 'Error al registar el usuario'})
         }
     },
 
     login(req, res) {
-        users.findOne({
+        User.findOne({
             where: {email: req.body.email}
         }).then(users=> {
             if(!users) {
                 return res.status(400).send({ message:"Usuario o contraseña incorrectos" })
             }
-            const isMatch = bcrypt.compareSync(req.body.password, users.password)
+            const isMatch = bcrypt.compareSync(req.body.password, User.password)
             if(!isMatch) {
                 return res.status(400).send({ message:"Usuario o contraseña incorrectos" })
             }
-        let token = jwt.sign({ id:users.id}, jwt_secret)
-        Token.create({ token, UserId: users.id})
-        res.send({ message: 'Bienvenid@' + user.name, user, token })
+        let token = jwt.sign({ id:User.id}, jwt_secret)
+        Token.create({ token, UserId: User.id})
+        res.send({ message: 'Bienvenid@' + User.name, User, token })
         })
     },
 
     async logout (req, res) {
         try {
-            await users.findByIdAndUpdate(req.user._id, {
+            await User.findByIdAndUpdate(req.user._id, {
                 $pull: { tokens: req.headers.authorization },
             })
             res.send({ message:"Usuario desconectado con éxito" })
