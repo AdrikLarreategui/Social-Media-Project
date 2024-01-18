@@ -1,5 +1,5 @@
 const User = require('../models/users')
-//const comments = require('../')
+const Post = require('../models/post')
 const jwt = require('jsonwebtoken')
 const { jwt_secret } = require('../config/keys')
 
