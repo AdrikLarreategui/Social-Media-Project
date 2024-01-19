@@ -1,15 +1,22 @@
 const Post = require('../models/post')
 
 const PostController = {
-    async create (req, res) {
-        try {
-            const post = await Post.create(req.body)
-            res.status(200).send(post)
-        } catch (error) {
-            console.error(error)
-            res.starus(500).send({ message: "Ha habido un problema al crear el post"})
+    create (req, res) {
+        const { body } = req.body
+        if (!body) {
+            return res.status(400).send('POr favor, escribe algo en el campo correspondiente')
         }
     },
+    // async create (req, res) {
+    //     try {
+    //         const post = await Post.create(req.body)
+    //         res.status(200).send(post)
+            
+    //     } catch (error) {
+    //         console.error(error)
+    //         res.starus(500).send({ message: "Ha habido un problema al crear el post"})
+    //     }
+    // },
     async update(req, res) {
         try{
             const post = await Post.findByIdAndUpdate(req.params._id, req.body, {new: true })
